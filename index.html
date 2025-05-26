@@ -1,47 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Teleprompter</title>
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-        background: black;
-        color: white;
-        font-size: 4em;
-        font-family: Arial, sans-serif;
-        overflow: hidden;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teleprompter</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      color: white;
+      font-size: 4em;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
 
-      .scroll-container {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-      }
+    .scroll-container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
 
-      .scroll-text {
-        position: absolute;
-        width: 100%;
-        top: 100%;
-        animation: scroll-up 60s linear infinite;
-      }
-
-      @keyframes scroll-up {
-        from {
-          top: 100%;
-        }
-        to {
-          top: -100%;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="scroll-container">
-      <div class="scroll-text">
+    .scroll-text {
+      position: absolute;
+      width: 100%;
+      white-space: pre-line;
+    }
+  </style>
+</head>
+<body>
+  <div class="scroll-container">
+    <div class="scroll-text" id="scrollText">
+      <!-- Paste your full long text here -->
+      
         <p>
           1 [Wait for silence] I’ll begin with a very short overview of my first
           semester, during which I got interested in the concept of Software
@@ -120,7 +112,25 @@
           refusal. For this I built this tool that sabotages a text in a pdf.
           And for now I used a text I created in Tinas class. I hope it works.</p>
         </p>
-      </div>
+      
     </div>
-  </body>
+  </div>
+
+  <script>
+    const scrollText = document.getElementById("scrollText");
+    let pos = window.innerHeight;
+    const speed = 0.8; // Adjust this for slower/faster scrolling
+
+    function scroll() {
+      pos -= speed;
+      scrollText.style.top = pos + "px";
+
+      if (-pos < scrollText.offsetHeight + 100) {
+        requestAnimationFrame(scroll);
+      }
+    }
+
+    scroll();
+  </script>
+</body>
 </html>
